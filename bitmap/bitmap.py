@@ -15,16 +15,22 @@ class Bitmap(object):
 
     @classmethod
     def read_file(cls, origin):
-        """Class Method which consumes a file path as input, and returns a Bitmap instance.
         """
-        # TODO: Complete this method for consuming a file from the file system and creating a BMP instance (cls).
-        pass
+        Class Method which consumes a file path as input, and returns a Bitmap instance.
+        input-origin: a path of the origin file (string)
+        output: a Bitmap instance (class object)
+        """
+        with open(origin, 'rb') as source:
+            raw = source.read()
+        return Bitmap(raw)
+
 
     def write_file(self, target):
-        """Instance Method which accepts a target file path and writes the instance source data to target path.
         """
-        # TODO: Complete this method for writing a file from to the file system from the BMP instance (self).
-        pass
+        Instance Method which accepts a target file path and writes the instance source data to target path.
+        """
+        with open("bmp_copy.bmp",'br+') as f:
+            f.write(self.memory_view.tobytes())
 
     def get_headers(self):
         """Instance Method which provides instance source data as readable output to std out.
@@ -35,7 +41,7 @@ class Bitmap(object):
             Size: {s.unpack('I', self.memory_view[2:6].tobytes())[0]}
             Reserved 1: {s.unpack('H', self.memory_view[6:8].tobytes())[0]}
             Reserved 2: {s.unpack('H', self.memory_view[8:10].tobytes())[0]}
-            Offset: {s.unpack('I', self.memory_view[10:14].tobytes())[0]}            
+            Offset: {s.unpack('I', self.memory_view[10:14].tobytes())[0]}
             DIB Header Size: {s.unpack('I', self.memory_view[14:18].tobytes())[0]}
             Width: {s.unpack('I', self.memory_view[18:22].tobytes())[0]}
             Height: {s.unpack('I', self.memory_view[22:26].tobytes())[0]}
