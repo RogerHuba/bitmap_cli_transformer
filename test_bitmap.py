@@ -18,18 +18,26 @@ def test_write_file_success():
     original_bitmap = Bitmap.read_file(BMP_FILE_PATH)
     try:
         original_bitmap.write_file(BMP_TEST_FILE_PATH)
-        # os.remove(BMP_TEST_FILE_PATH)
+        os.remove(BMP_TEST_FILE_PATH)
     except IOError:
         pytest.fail(f'Problem writing test file {BMP_TEST_FILE_PATH}.')
-
+    except FileNotFoundError:
+        pytest.fail(f'Problem removing test file {BMP_TEST_FILE_PATH}.')
 
 def test_write_file_matches_original():
     """Read a file, then write its contents to new file. Read and compare original to written."""
+    # Instantiate Bitmap object with original file
     original_bitmap = Bitmap.read_file(BMP_FILE_PATH)
     try:
+        # Write the original data to a new file
         original_bitmap.write_file(BMP_TEST_FILE_PATH)
+        # Clean up test file
         os.remove(BMP_TEST_FILE_PATH)
     except IOError:
-        pytest.fails(f'Problem writing test file {BMP_TEST_FILE_PATH}.')
-    new_bitmap = Bitmap.read_file(BMP_TEST_FILE_PATH)
+        pytest.fail(f'Problem writing test file {BMP_TEST_FILE_PATH}.')
+    except FileNotFoundError:
+        pytest.fail(f'Problem removing test file {BMP_TEST_FILE_PATH}.')
+    # Instantiate a Bitmap object from the new file
+    new_bitmap = Bitmap.read_file(BMP_FILE_PATH)
+    # Compare the headers read from the old file with the new
     assert original_bitmap.get_headers() == new_bitmap.get_headers()

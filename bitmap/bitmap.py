@@ -15,16 +15,22 @@ class Bitmap(object):
 
     @classmethod
     def read_file(cls, origin):
-        """Class Method which consumes a file path as input, and returns a Bitmap instance.
         """
-        with open(origin, 'rb') as input_file:
-            return Bitmap(input_file.read())
+        Class Method which consumes a file path as input, and returns a Bitmap instance.
+        input-origin: a path of the origin file (string)
+        output: a Bitmap instance (class object)
+        """
+        with open(origin, 'rb') as source:
+            raw = source.read()
+        return Bitmap(raw)
+
 
     def write_file(self, target):
-        """Instance Method which accepts a target file path and writes the instance source data to target path.
         """
-        # TODO: Complete this method for writing a file from to the file system from the BMP instance (self).
-        pass
+        Instance Method which accepts a target file path and writes the instance source data to target path.
+        """
+        with open(target,'bw+') as f:
+            f.write(self.memory_view.tobytes())
 
     def get_headers(self):
         """Instance Method which provides instance source data as readable output to std out.
