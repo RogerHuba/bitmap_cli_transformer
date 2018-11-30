@@ -17,8 +17,8 @@ class Bitmap(object):
     def read_file(cls, origin):
         """Class Method which consumes a file path as input, and returns a Bitmap instance.
         """
-        # TODO: Complete this method for consuming a file from the file system and creating a BMP instance (cls).
-        pass
+        with open(origin, 'rb') as input_file:
+            return Bitmap(input_file.read())
 
     def write_file(self, target):
         """Instance Method which accepts a target file path and writes the instance source data to target path.
@@ -35,7 +35,7 @@ class Bitmap(object):
             Size: {s.unpack('I', self.memory_view[2:6].tobytes())[0]}
             Reserved 1: {s.unpack('H', self.memory_view[6:8].tobytes())[0]}
             Reserved 2: {s.unpack('H', self.memory_view[8:10].tobytes())[0]}
-            Offset: {s.unpack('I', self.memory_view[10:14].tobytes())[0]}            
+            Offset: {s.unpack('I', self.memory_view[10:14].tobytes())[0]}
             DIB Header Size: {s.unpack('I', self.memory_view[14:18].tobytes())[0]}
             Width: {s.unpack('I', self.memory_view[18:22].tobytes())[0]}
             Height: {s.unpack('I', self.memory_view[22:26].tobytes())[0]}
