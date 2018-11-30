@@ -92,14 +92,52 @@ class Bitmap(object):
         ) + mod_pixel_array
         return bitmap_data
 
-    def transform_bitmap_randomize_colors(self):
-        """Instance method on Bitmap objects that randomizes the color table.
+    def transform_bitmap_turn_blue(self):
+        """Instance method on Bitmap that sets the blue byte in the bitmap color table to 255.
 
         input: none
         output: binary data representing bitmap
         """
-        new_color_table = bytes([random.randint(0, 255)
-                                 for _ in range(len(self.color_table))])
+        print(type(self.color_table[0]))
+        for x in range(0, len(self.color_table), 4):
+            self.color_table[x] = 255
         bitmap_data = self.memory_view[:54].tobytes(
-        ) + new_color_table + self.pixel_array.tobytes()
+        ) + self.color_table + self.pixel_array.tobytes()
+        return bitmap_data
+
+    def transform_bitmap_turn_red(self):
+        """Instance method on Bitmap that sets the red byte in the bitmap color table to 255.
+
+        input: none
+        output: binary data representing bitmap
+        """
+        print(type(self.color_table[0]))
+        for x in range(0, len(self.color_table), 4):
+            self.color_table[x + 2] = 255
+        bitmap_data = self.memory_view[:54].tobytes(
+        ) + self.color_table + self.pixel_array.tobytes()
+        return bitmap_data
+
+    def transform_bitmap_turn_green(self):
+        """Instance method on Bitmap that sets the green byte in the bitmap color table to 255.
+
+        input: none
+        output: binary data representing bitmap
+        """
+        for x in range(0, len(self.color_table), 4):
+            self.color_table[x + 1] = 255
+        bitmap_data = self.memory_view[:54].tobytes(
+        ) + self.color_table + self.pixel_array.tobytes()
+        return bitmap_data
+
+    def transform_bitmap_randomize_colors(self):
+        """Instance method on Bitmap objects that randomizes every byte in the color table.
+
+        input: none
+        output: binary data representing bitmap
+        """
+        for x in range(0, len(self.color_table)):
+            self.color_table[x] = random.randint(0, 255)
+        bitmap_data = self.memory_view[:54].tobytes(
+        ) + self.color_table + self.pixel_array.tobytes()
         return bitmap_data
