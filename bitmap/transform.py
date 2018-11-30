@@ -42,4 +42,3 @@ class BitmapManipulator(cmd.Cmd):
 if __name__ == '__main__':
     BitmapManipulator().cmdloop()
 
-
