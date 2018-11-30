@@ -29,7 +29,7 @@ class Bitmap(object):
         """
         Instance Method which accepts a target file path and writes the instance source data to target path.
         """
-        with open("bmp_copy.bmp",'br+') as f:
+        with open(target,'bw+') as f:
             f.write(self.memory_view.tobytes())
 
     def get_headers(self):
