@@ -58,15 +58,32 @@ class Bitmap(object):
 
     # TODO: Write your instance methods for transformations here as part of the Bitmap class.
     def transform_bitmap_rotate_180(self):
-        bitmap_data = self.memory_view[:self.offset].tobytes() + self.pixel_array[::-1].tobytes() + self.memory_view[self.offset  + len(self.pixel_array):].tobytes()
+        """Instance method on Bitmap objects that reverses the order of self.pixel_array and concatentates
+        it back into the binary data, causing the bitmap image to appear rotated 180 degrees.
+
+        input: none
+        output: binary data representing bitmap
+        """
+        bitmap_data = self.memory_view[:self.offset].tobytes() + self.pixel_array[::-1].tobytes()
         return bitmap_data
 
     def transform_bitmap_flip_horizontal(self):
+        """Instance method on Bitmap objects that reverses the order each row of pixels in
+        self.pixel_array and concatentates it back into the binary data, causing the
+        bitmap image to appear rotated 180 degrees.
+
+        input: none
+        output: binary data representing bitmap
+        """
         import struct as s
+        # Need image width to determine pixel rows
         img_width = s.unpack('I', self.memory_view[18:22].tobytes())[0]
-        img_height = s.unpack('I', self.memory_view[22:26].tobytes())[0]
-        pixel_array = bytes()
+        # New byte string to hold modified pixel array
+        mod_pixel_array = bytes()
+        # Iterate over self.pixel_array img_width pixels at a time
         for i in range(0, len(self.pixel_array), img_width):
-            pixel_array += self.pixel_array[i: i + img_width][::-1].tobytes()
-        bitmap_data = self.memory_view[:self.offset].tobytes() + pixel_array + self.memory_view[self.offset  + len(self.pixel_array):].tobytes()
+            # Add a reversed slice of self.pixel_array to the new pixel array
+            mod_pixel_array += self.pixel_array[i: i + img_width][::-1].tobytes()
+        # Concatenate the data up to the pixel array, then the pixel array
+        bitmap_data = self.memory_view[:self.offset].tobytes() + mod_pixel_array
         return bitmap_data
