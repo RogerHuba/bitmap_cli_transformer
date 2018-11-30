@@ -1,3 +1,4 @@
+import random
 import struct
 
 
@@ -55,15 +56,15 @@ class Bitmap(object):
         '''
         return result
 
-
     # TODO: Write your instance methods for transformations here as part of the Bitmap class.
+
     def transform_bitmap_rotate_180(self):
         """Instance method on Bitmap objects that reverses the order of self.pixel_array and concatentates
         it back into the binary data, causing the bitmap image to appear rotated 180 degrees.
 
         input: none
         output: binary data representing bitmap
-        """
+        p"""
         bitmap_data = self.memory_view[:self.offset].tobytes(
         ) + self.pixel_array[::-1].tobytes()
         return bitmap_data
@@ -89,4 +90,16 @@ class Bitmap(object):
         # Concatenate the data up to the pixel array, then the pixel array
         bitmap_data = self.memory_view[:self.offset].tobytes(
         ) + mod_pixel_array
+        return bitmap_data
+
+    def transform_bitmap_randomize_colors(self):
+        """Instance method on Bitmap objects that randomizes the color table.
+
+        input: none
+        output: binary data representing bitmap
+        """
+        new_color_table = bytes([random.randint(0, 255)
+                                 for _ in range(len(self.color_table))])
+        bitmap_data = self.memory_view[:54].tobytes(
+        ) + new_color_table + self.pixel_array.tobytes()
         return bitmap_data
