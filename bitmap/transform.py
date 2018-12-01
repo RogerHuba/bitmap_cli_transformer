@@ -32,9 +32,65 @@ class BitmapManipulator(cmd.Cmd):
         applied to the new file.
         """
 
-        get_file_in()
-        get_file_out()
-        get_menu_option()
+        # Parse input to this function, check for 3 arguments
+        args = arg.split()
+        if len(args) != 3:
+            print('Sorry. Error parsing arguments. Type `help transform` for usage of this command.')
+            return
+        # Unpack arguments
+        original, new, transform = args
+
+        # Create Bitmap object from original. Return on FNF.
+        try:
+            bm = Bitmap.read_file(original)
+        except FileNotFoundError:
+            print(f'Couldn\'t locate bitmap file {original}. Type `help transform` for usage of this command.')
+            return
+
+        # Perform selected transform, creating new Bitmap instance with transformed data.
+        if transform == '1':
+            new_bm = Bitmap(bm.transform_bitmap_rotate_180())
+        elif transform == '2':
+            new_bm = Bitmap(bm.transform_bitmap_flip_horizontal())
+        elif transform == '3':
+            new_bm = Bitmap(bm.transform_bitmap_turn_blue())
+        elif transform == '4':
+            new_bm = Bitmap(bm.transform_bitmap_turn_red())
+        elif transform == '5':
+            new_bm = Bitmap(bm.transform_bitmap_turn_green())
+        elif transform == '6':
+            new_bm = Bitmap(bm.transform_bitmap_randomize_colors())
+        elif transform == '7':
+            new_bm = Bitmap(bm.transform_bitmap_turn_blackwhite())
+        elif transform == '8':
+            new_bm = Bitmap(bm.transform_bitmap_light())
+        elif transform == '9':
+            new_bm = Bitmap(bm.transform_bitmap_dark())
+        else:
+            print(f'{transform} is not a valid transform. Type `list_transforms` to see the available transforms.')
+            return
+        print('Transform success.')
+
+        # Write new Bitmap object data to file. Return on IOError.
+        try:
+            new_bm.write_file(new)
+            print(f'Wrote new bitmap file {new}')
+        except IOError:
+            print(f'There was a problem writing the file {new}')
+
+    def do_list_transforms(self, arg):
+        print()
+        print('Available transforms are:')
+        print('1) Rotate Picture 180 Deg')
+        print('2) Flip Horizontally')
+        print('3) Turn Picture Blue')
+        print('4) Turn Picture Red')
+        print('5) Turn Picture Green')
+        print('6) Randomize Picture Colors')
+        print('7) Turn image black and white')
+        print('8) Lighten image')
+        print('9) Darken image')
+        print()
 
     def emptyline(self):
         """Handles when the user presses enter and submits an empty line"""
@@ -59,6 +115,10 @@ class BitmapManipulator(cmd.Cmd):
         """
         print('\nEnter the command transform. Will be prompted for "file-in" \
         "file-out"\n')
+
+    def help_list_transforms(self):
+        """Documentation for list_transforms command."""
+        print('\nDisplays a list of the available transforms. The number of the transform should be supplied in combination with `transform` to apply the associated transform.')
 
     @staticmethod
     def do_exit(args):
