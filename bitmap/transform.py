@@ -129,54 +129,57 @@ class BitmapManipulator(cmd.Cmd):
         sys.exit('Thank you for using the application')
 
 
-def get_file_in():
-    """Will take in user entered file and verify that the file exists.
-    """
-    file_in_message = 'Enter file to transform: '
-    is_file = False
-    while is_file is False:
-        source = input(file_in_message)
-        if (os.path.isfile(source)):
-            is_file = True
-            print('File Verified\n')
-            return source
-        else:
-            file_in_message = '\nInvalid file.  Enter a file to transform:  '
+# def get_file_in():
+#     """Will take in user entered file and verify that the file exists.
+#     """
+#     file_in_message = 'Enter file to transform: '
+#     is_file = False
+#     while is_file is False:
+#         source = input(file_in_message)
+#         if (os.path.isfile(source)):
+#             is_file = True
+#             print('File Verified\n')
+#             return source
+#         else:
+#             file_in_message = '\nInvalid file.  Enter a file to transform:  '
 
 
-def get_file_out():
-    """Will take user entered file for saving the transformed file
-    """
-    file_out = False
-    file_out_message = 'Enter name of the file to save to:  '
-    while file_out is False:
-        input(file_out_message)
-        if file_out_message:
-            file_out = True
-            print('\nFile out verified\n')
-            return file_out
-        else:
-            file_out_message = 'Please enter a valid file name'
+# def get_file_out():
+#     """Will take user entered file for saving the transformed file
+#     """
+#     file_out = False
+#     file_out_message = 'Enter name of the file to save to:  '
+#     while file_out is False:
+#         input(file_out_message)
+#         if file_out_message:
+#             file_out = True
+#             print('\nFile out verified\n')
+#             return file_out
+#         else:
+#             file_out_message = 'Please enter a valid file name'
 
 
-def get_menu_option():
-    """Users will enter a number from 1 -6 to select action."""
-    transform_menu = 0
-    transform_message = 'Select an Action to take on the picture: '
-    while ((transform_menu < 1) or (transform_menu > 6)):
-        print('\n1) Rotate Picture 180 Deg')
-        print('2) Flip Horizontally')
-        print('3) Turn Picture Blue')
-        print('4) Turn Picture Green')
-        print('5) Turn Picture Red')
-        print('6) Randomize Picture Colors\n')
-        transform_menu = int(input(transform_message))
-        if ((transform_menu < 1) or (transform_menu > 6)):
-            transform_message = 'Invalid action. Please select again'
-        else:
-            return transform_menu
+# def get_menu_option():
+#     """Users will enter a number from 1 -6 to select action."""
+#     transform_menu = 0
+#     transform_message = 'Select an Action to take on the picture: '
+#     while ((transform_menu < 1) or (transform_menu > 6)):
+#         print('\n1) Rotate Picture 180 Deg')
+#         print('2) Flip Horizontally')
+#         print('3) Turn Picture Blue')
+#         print('4) Turn Picture Green')
+#         print('5) Turn Picture Red')
+#         print('6) Randomize Picture Colors\n')
+#         transform_menu = int(input(transform_message))
+#         if ((transform_menu < 1) or (transform_menu > 6)):
+#             transform_message = 'Invalid action. Please select again'
+#         else:
+#             return transform_menu
 
 
 if __name__ == '__main__':
-    os.system('clear')
-    BitmapManipulator().cmdloop()
+    try:
+        os.system('clear')
+        BitmapManipulator().cmdloop()
+    except KeyboardInterrupt:
+        os._exit(0)
