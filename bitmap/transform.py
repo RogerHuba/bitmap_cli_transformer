@@ -98,27 +98,29 @@ class BitmapManipulator(cmd.Cmd):
 
     def help_exit(self):
         """User enters help exit """
-        print('\nType "exit" to leave the program\n')
+        print('\nType "exit" to leave the program\n\n')
+        print('Usage: exit\n')
 
     def help_transform(self):
         """User enters help transform
         transform input-file output-file
         Will then prompt user for type of transformation to apply.
         """
-        print('\nEnter transform. Prompt for files and type of \
-        transformation\n')
+        print('\nTransform a bitmap file and save to a new file.\n\n')
+        print('Usage: transform <path_to_source_file> <path_to_destination_file> <transform>\n')
 
     def help_get_headers(self):
         """User enters help get_headers.
         After the user enters the file-in and file out will select the type
         of transformation to take place on the file.
         """
-        print('\nEnter the command transform. Will be prompted for "file-in" \
-        "file-out"\n')
+        print('\nView the extracted headers from a bitmap file.\n\n')
+        print('Usage: get_headers <path_to_source_bitmap>\n')
 
     def help_list_transforms(self):
         """Documentation for list_transforms command."""
-        print('\nDisplays a list of the available transforms. The number of the transform should be supplied in combination with `transform` to apply the associated transform.')
+        print('\nDisplays a list of the available transforms. The number of the transform should be supplied in combination with `transform` to apply the associated transform.\n\n')
+        print('Usage: list_transforms\n')
 
     @staticmethod
     def do_exit(args):
