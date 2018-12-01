@@ -20,9 +20,11 @@ def test_write_file_success():
         original_bitmap.write_file(BMP_TEST_FILE_PATH)
         os.remove(BMP_TEST_FILE_PATH)
     except IOError:
-        pytest.fail(f'Problem writing test file {BMP_TEST_FILE_PATH}.')
+        output = f'Problem writing test file { BMP_TEST_FILE_PATH } .'
+        pytest.fail(output)
     except FileNotFoundError:
-        pytest.fail(f'Problem removing test file {BMP_TEST_FILE_PATH}.')
+        output = f'Problem removing test file { BMP_TEST_FILE_PATH } .'
+        pytest.fail(output)
 
 def test_write_file_matches_original():
     """Read a file, then write its contents to new file. Read and compare original to written."""

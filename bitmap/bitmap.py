@@ -53,7 +53,7 @@ class Bitmap(object):
             Vertical Resolution: {s.unpack('I', self.memory_view[42:46].tobytes())[0]}
             Number of Colours: {s.unpack('I', self.memory_view[46:50].tobytes())[0]}
             Important Colours: {s.unpack('I', self.memory_view[50:54].tobytes())[0]}
-        '''
+            '''
         return result
 
     # TODO: Write your instance methods for transformations here as part of the Bitmap class.
@@ -141,3 +141,77 @@ class Bitmap(object):
         bitmap_data = self.memory_view[:54].tobytes(
         ) + self.color_table + self.pixel_array.tobytes()
         return bitmap_data
+
+    def transform_bitmap_turn_blackwhite(self):
+        """Instance method on Bitmap that makes each set of color table either black or white.
+        No gray area!
+
+        input: none
+        output: binary data representing bitmap
+        """
+        for x in range(0, len(self.color_table), 4):
+            # building a threshold based on input rgb values
+            color_sum = self.color_table[x] + self.color_table[x+1] +\
+            self.color_table[x+2]
+
+            # this criterion can be arbitrary.
+            if color_sum >= (255*3//2):
+                self.color_table[x] = 255
+                self.color_table[x+1] = 255
+                self.color_table[x+2] = 255
+
+                # didn't work this way...
+                # self.color_table[x:x+2] = 255,255,255
+            else:
+                self.color_table[x] = 0
+                self.color_table[x+1] = 0
+                self.color_table[x+2] = 0
+
+                # didn't work this way...
+                # self.color_table[x:x+2] = 0,0,0
+        bitmap_data = self.memory_view[:54].tobytes(
+        ) + self.color_table + self.pixel_array.tobytes()
+        return bitmap_data
+
+    def transform_bitmap_light(self):
+        """Instance method on Bitmap that makes bitmap file brighter and lighter.
+
+        input: none
+        output: binary data representing bitmap
+        """
+        for x in range(0, len(self.color_table), 4):
+            self.color_table[x] = min(255, self.color_table[x]*2)
+            self.color_table[x+1] = min(255, self.color_table[x+1]*2)
+            self.color_table[x+2] = min(255, self.color_table[x+2]*2)
+        bitmap_data = self.memory_view[:54].tobytes(
+        ) + self.color_table + self.pixel_array.tobytes()
+        return bitmap_data
+
+    def transform_bitmap_dark(self):
+        """Instance method on Bitmap that makes bitmap file grimmer and darker.
+
+        input: none
+        output: binary data representing bitmap
+        """
+        for x in range(0, len(self.color_table), 4):
+            self.color_table[x] //= 2
+            self.color_table[x+1] //= 2
+            self.color_table[x+2] //= 2
+        bitmap_data = self.memory_view[:54].tobytes(
+        ) + self.color_table + self.pixel_array.tobytes()
+        return bitmap_data
+
+    # def transform_bitmap_whatif(self):
+    #     """Instance method on Bitmap that sets the green byte in the bitmap color table to 255.
+
+    #     input: none
+    #     output: binary data representing bitmap
+    #     """
+    #     for x in range(0, len(self.color_table), 4):
+    #         # ok..memoryview will complain for invalid input
+    #         self.color_table[x] = -123
+    #         self.color_table[x+1] = 234
+    #         self.color_table[x+2] = 345
+    #     bitmap_data = self.memory_view[:54].tobytes(
+    #     ) + self.color_table + self.pixel_array.tobytes()
+    #     return bitmap_data
