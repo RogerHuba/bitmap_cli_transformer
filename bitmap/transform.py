@@ -50,24 +50,33 @@ class BitmapManipulator(cmd.Cmd):
         # Perform selected transform, creating new Bitmap instance with transformed data.
         if transform == '1':
             new_bm = Bitmap(bm.transform_bitmap_rotate_180())
+            print("Running transform of rotate in 180 degrees....Finished!")
         elif transform == '2':
             new_bm = Bitmap(bm.transform_bitmap_flip_horizontal())
+            print("Running transform of horizontal flip....Finished!")
         elif transform == '3':
             new_bm = Bitmap(bm.transform_bitmap_turn_blue())
+            print("Running transform to turn the image into blue scale....Finished!")
         elif transform == '4':
             new_bm = Bitmap(bm.transform_bitmap_turn_red())
+            print("Running transform to turn the image into red scale....Finished!")
         elif transform == '5':
             new_bm = Bitmap(bm.transform_bitmap_turn_green())
+            print("Running transform to turn the image into green scale....Finished!")
         elif transform == '6':
             new_bm = Bitmap(bm.transform_bitmap_randomize_colors())
+            print("Running transform to randomize the color in the image....Finished!")
         elif transform == '7':
             new_bm = Bitmap(bm.transform_bitmap_turn_blackwhite())
+            print("Running transform to turn the image into black and white....Finished!")
         elif transform == '8':
             new_bm = Bitmap(bm.transform_bitmap_light())
+            print("Running transform to turn the image brighter....Finished!")
         elif transform == '9':
             new_bm = Bitmap(bm.transform_bitmap_dark())
+            print("Running transform to turn the image into darker....Finished!")
         else:
-            print(f'{transform} is not a valid transform. Type `list_transforms` to see the available transforms.')
+            print(f'{ transform } is not a valid transform. Type `list_transforms` to see the available transforms.')
             return
         print('Transform success.')
 
