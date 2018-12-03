@@ -114,6 +114,7 @@ class Bitmap(object):
         print(type(self.color_table[0]))
         for x in range(0, len(self.color_table), 4):
             self.color_table[x + 2] = 255
+
         bitmap_data = self.memory_view[:54].tobytes(
         ) + self.color_table + self.pixel_array.tobytes()
         return bitmap_data
@@ -126,6 +127,7 @@ class Bitmap(object):
         """
         for x in range(0, len(self.color_table), 4):
             self.color_table[x + 1] = 255
+
         bitmap_data = self.memory_view[:54].tobytes(
         ) + self.color_table + self.pixel_array.tobytes()
         return bitmap_data
@@ -138,6 +140,7 @@ class Bitmap(object):
         """
         for x in range(0, len(self.color_table)):
             self.color_table[x] = random.randint(0, 255)
+
         bitmap_data = self.memory_view[:54].tobytes(
         ) + self.color_table + self.pixel_array.tobytes()
         return bitmap_data
