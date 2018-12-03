@@ -5,7 +5,12 @@ from bitmap import Bitmap
 
 
 class BitmapManipulator(cmd.Cmd):
-    intro = 'Welcome to bitmap manipulator.\nType help or ? to list commands.\n'
+    intro = 'Welcome to bitmap manipulator!\n'\
+    'In this program, you can input bmp files and apply several different transform\n\n'\
+    'Type in <transform> <input path> <output path> <code of transform 1-9>\n'\
+    'e.g. <transform .bmp.bmp .new_bmp.bmp 1> will rotate your bmp.bmp file 180 degree\n'\
+    'and save it as new_bmp.bmp file in your current path.\n\n'\
+    'Type <help> or <?> to list commands.\n\n\n'
     prompt = '$ >'
 
     @staticmethod
@@ -105,10 +110,7 @@ class BitmapManipulator(cmd.Cmd):
         """Handles when the user presses enter and submits an empty line"""
         print('Type help or ? to list commands.\n')
 
-    def help_exit(self):
-        """User enters help exit """
-        print('\nType "exit" to leave the program\n\n')
-        print('Usage: exit\n')
+
 
     def help_transform(self):
         """User enters help transform
@@ -130,6 +132,11 @@ class BitmapManipulator(cmd.Cmd):
         """Documentation for list_transforms command."""
         print('\nDisplays a list of the available transforms. The number of the transform should be supplied in combination with `transform` to apply the associated transform.\n\n')
         print('Usage: list_transforms\n')
+
+    def help_exit(self):
+        """User enters help exit """
+        print('\nType "exit" to leave the program\n\n')
+        print('Usage: exit\n')
 
     @staticmethod
     def do_exit(args):
@@ -193,4 +200,5 @@ if __name__ == '__main__':
         os.system('clear')
         BitmapManipulator().cmdloop()
     except KeyboardInterrupt:
+        print(' exiting bitmap manipulator...\n$ > Good Bye \n\n')
         os._exit(0)
