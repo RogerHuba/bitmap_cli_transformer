@@ -5,7 +5,12 @@ from bitmap import Bitmap
 
 
 class BitmapManipulator(cmd.Cmd):
-    intro = 'Welcome to bitmap manipulator.\nType help or ? to list commands.\n'
+    intro = 'Welcome to bitmap manipulator!\n'\
+    'In this program, you can input bmp files and apply several different transform\n\n'\
+    'Type in <transform> <input path> <output path> <code of transform 1-9>\n'\
+    'e.g. <transform .bmp.bmp .new_bmp.bmp 1> will rotate your bmp.bmp file 180 degree\n'\
+    'and save it as new_bmp.bmp file in your current path.\n\n'\
+    'Type <help> or <?> to list commands.\n\n\n'
     prompt = '$ >'
 
     @staticmethod
@@ -50,24 +55,33 @@ class BitmapManipulator(cmd.Cmd):
         # Perform selected transform, creating new Bitmap instance with transformed data.
         if transform == '1':
             new_bm = Bitmap(bm.transform_bitmap_rotate_180())
+            print("Running transform of rotate in 180 degrees....Finished!")
         elif transform == '2':
             new_bm = Bitmap(bm.transform_bitmap_flip_horizontal())
+            print("Running transform of horizontal flip....Finished!")
         elif transform == '3':
             new_bm = Bitmap(bm.transform_bitmap_turn_blue())
+            print("Running transform to turn the image into blue scale....Finished!")
         elif transform == '4':
             new_bm = Bitmap(bm.transform_bitmap_turn_red())
+            print("Running transform to turn the image into red scale....Finished!")
         elif transform == '5':
             new_bm = Bitmap(bm.transform_bitmap_turn_green())
+            print("Running transform to turn the image into green scale....Finished!")
         elif transform == '6':
             new_bm = Bitmap(bm.transform_bitmap_randomize_colors())
+            print("Running transform to randomize the color in the image....Finished!")
         elif transform == '7':
             new_bm = Bitmap(bm.transform_bitmap_turn_blackwhite())
+            print("Running transform to turn the image into black and white....Finished!")
         elif transform == '8':
             new_bm = Bitmap(bm.transform_bitmap_light())
+            print("Running transform to turn the image brighter....Finished!")
         elif transform == '9':
             new_bm = Bitmap(bm.transform_bitmap_dark())
+            print("Running transform to turn the image into darker....Finished!")
         else:
-            print(f'{transform} is not a valid transform. Type `list_transforms` to see the available transforms.')
+            print(f'{ transform } is not a valid transform. Type `list_transforms` to see the available transforms.')
             return
         print('Transform success.')
 
@@ -96,10 +110,7 @@ class BitmapManipulator(cmd.Cmd):
         """Handles when the user presses enter and submits an empty line"""
         print('Type help or ? to list commands.\n')
 
-    def help_exit(self):
-        """User enters help exit """
-        print('\nType "exit" to leave the program\n\n')
-        print('Usage: exit\n')
+
 
     def help_transform(self):
         """User enters help transform
@@ -121,6 +132,11 @@ class BitmapManipulator(cmd.Cmd):
         """Documentation for list_transforms command."""
         print('\nDisplays a list of the available transforms. The number of the transform should be supplied in combination with `transform` to apply the associated transform.\n\n')
         print('Usage: list_transforms\n')
+
+    def help_exit(self):
+        """User enters help exit """
+        print('\nType "exit" to leave the program\n\n')
+        print('Usage: exit\n')
 
     @staticmethod
     def do_exit(args):
@@ -184,4 +200,5 @@ if __name__ == '__main__':
         os.system('clear')
         BitmapManipulator().cmdloop()
     except KeyboardInterrupt:
+        print(' exiting bitmap manipulator...\n$ > Good Bye \n\n')
         os._exit(0)

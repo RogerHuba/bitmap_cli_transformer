@@ -135,12 +135,12 @@ def test_transform_bitmap_randomize_colors():
     original_bitmap = Bitmap.read_file(BMP_FILE_PATH)
     transformed_bitmap = Bitmap(original_bitmap.transform_bitmap_randomize_colors())
 
-    # check rotation by comparing locations: ...hum...somehow it doesn't work...
-    # that's really odd... I'm expecting them to be different but turn out to be hte same.
+    del original_bitmap
+    original_bitmap = Bitmap.read_file(BMP_FILE_PATH)
+    # check rotation by comparing locations:
     for x in range(0,len(transformed_bitmap.color_table),4):
-        assert(transformed_bitmap.color_table[x:x+4].tobytes() == \
+        assert(transformed_bitmap.color_table[x:x+4].tobytes() != \
                 original_bitmap.color_table[x:x+4].tobytes())
-        # assert(original_bitmap.color_table.tobytes() != transformed_bitmap.color_table.tobytes())
 
 
 def test_transform_bitmap_turn_blackwhite():
