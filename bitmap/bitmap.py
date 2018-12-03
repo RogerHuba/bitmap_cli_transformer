@@ -202,8 +202,8 @@ class Bitmap(object):
         return bitmap_data
 
     # def transform_bitmap_whatif(self):
-    #     """Instance method on Bitmap that sets the green byte in the bitmap color table to 255.
-
+    #     """Some funky stuff...it turns out that memoryview limits its input
+    #     based on format. e.g. format 'B' --> input \in [0,255]
     #     input: none
     #     output: binary data representing bitmap
     #     """
